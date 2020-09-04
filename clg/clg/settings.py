@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
+    'corsheaders',
     'core',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', 
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'clg.urls'
@@ -83,6 +86,8 @@ DATABASES = {
 }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -106,6 +111,19 @@ AUTH_USER_MODEL = 'core.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+],
+}
+
+
+CORS_ORIGIN_WHITELIST = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:5500",
+    "http://127.0.0.1:9000"
+]
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
