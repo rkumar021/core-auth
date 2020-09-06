@@ -20,3 +20,9 @@ class Role(models.Model):
 
 class User(AbstractUser):
     roles = models.ManyToManyField(Role)
+
+class Book(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.IntegerField()
