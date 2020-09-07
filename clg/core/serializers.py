@@ -18,4 +18,8 @@ class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password')
-        
+
+class DeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password')

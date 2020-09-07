@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,  IsAuthenticated
 import requests
 from .models import Book
-from .serializers import BookSerializer, SignUpSerializer, UpdateSerializer
+from .serializers import BookSerializer, SignUpSerializer, UpdateSerializer, DeleteSerializer
 from rest_framework import generics
 from .permissions import IsAuthenticatedOrCreate
 # from core.serializers import BookSerializer
@@ -26,4 +26,9 @@ class SignUp(generics.CreateAPIView):
 class Update(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateSerializer
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
+
+class Delete(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = DeleteSerializer
+    permission_classes = (AllowAny,)
