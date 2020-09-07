@@ -115,14 +115,22 @@ AUTH_USER_MODEL = 'core.User'
 
 REST_FRAMEWORK = {
 'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        
 ],
+'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.IsAuthenticated',
+    'rest_framework.permissions.IsAdminUser', 
+],
+
 }
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend' # To keep the Browsable API
+    'django.contrib.auth.backends.ModelBackend', # To keep the Browsable API
     'oauth2_provider.backends.OAuth2Backend',
 )
+
+
 
 CORS_ORIGIN_WHITELIST = [
     "https://example.com",
