@@ -8,10 +8,16 @@ class BookSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class SignUpSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
     class Meta:
         model = User
-        fields = ('username', 'password')
-        write_only_fields = ('password',)
+        fields = ('id', 'username', 'password')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
 class ViewSerializer(serializers.ModelSerializer):
     class Meta:
