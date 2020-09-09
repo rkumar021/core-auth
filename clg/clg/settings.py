@@ -46,14 +46,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', 
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', 
     'django.middleware.common.CommonMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',#1.oauth middleware
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'clg.urls'
@@ -120,7 +120,6 @@ REST_FRAMEWORK = {
 ],
 'DEFAULT_PERMISSION_CLASSES': [
     'rest_framework.permissions.IsAuthenticated',
-    'rest_framework.permissions.IsAdminUser', 
 ],
 
 }
@@ -136,7 +135,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:5500",
-    "http://127.0.0.1:9000"
+    "http://127.0.0.1:5500"
 ]
 LANGUAGE_CODE = 'en-us'
 
