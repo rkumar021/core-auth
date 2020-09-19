@@ -105,10 +105,20 @@
             var choice = confirm("Are You Sure You Want To Delete this Record ?");
             if (choice == true) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("DELETE", "http://127.0.0.1:8000/api/booksbooks/" + bookid + "/", true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 204) {
+                        alert('Record Deleted.....');
+                        location.reload()
+                    } else if (xhttp.readyState == 4 && xhttp.status == 403) {
+                        alert('You Can not do this Operation.... ');
+                        location.replace("allrecord.html")
+                    } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                        alert('Something went wrong...');
+                    }
+                }
+                xhttp.open("DELETE", "http://127.0.0.1:8000/" +bookid+ "/delete/", true);
                 xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
                 xhttp.send();
-                location.reload()
             }
         }
 
