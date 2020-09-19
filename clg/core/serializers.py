@@ -7,6 +7,14 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = "__all__"
 
+class CreateBookSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        book = Book.objects.create(**validated_data)
+        return book
+    class Meta:
+        model = Book
+        fields = ('id', 'created', 'title','description', 'price')
+
 class SignUpSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
@@ -26,10 +34,10 @@ class ViewSerializer(serializers.ModelSerializer):
         write_only_fields = ('password',)
 
 
-class UpdateSerializer(serializers.ModelSerializer):
+class UpdateBookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('username', 'password')
+        model = Book
+        fields = "__all__"
 
 class DeleteSerializer(serializers.ModelSerializer):
     class Meta:
