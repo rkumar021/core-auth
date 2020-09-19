@@ -135,7 +135,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5501"
 ]
 LANGUAGE_CODE = 'en-us'
 

@@ -19,7 +19,7 @@ urlpatterns = [
     path('view/', views.See.as_view()),
     path('create/', views.create, name="createbook"),
     path('<pk>/update/', views.Update.as_view(), name="update"),
-    path('delete/', views.Delete.as_view(), name="delete"),
+    path('<pk>/delete/', views.Delete.as_view(), name= "delete")
 
 ]
 

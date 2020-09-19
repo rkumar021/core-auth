@@ -8,7 +8,7 @@ import requests
 from .models import Book
 from .serializers import BookSerializer, SignUpSerializer, DeleteSerializer, CreateBookSerializer
 from rest_framework import generics
-from .permissions import ViewPermission, CreatePermission, UpdatePermission
+from .permissions import ViewPermission, CreatePermission, UpdatePermission, DeletePermission
 # from core.serializers import BookSerializer
 from .models import User
 
@@ -48,9 +48,9 @@ class Update(generics.UpdateAPIView):
     
 
 class Delete(generics.DestroyAPIView):
-    queryset = User.objects.all()
+    queryset = Book.objects.all()
     serializer_class = DeleteSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (DeletePermission,)
 
 
 @api_view(['POST'])
