@@ -41,5 +41,5 @@ class UpdateBookSerializer(serializers.ModelSerializer):
 
 class DeleteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('username', 'password')
+        model = Book
+        fields = "__all__"

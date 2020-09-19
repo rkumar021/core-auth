@@ -13,7 +13,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework import status
-from .permissions import ViewPermission, CreatePermission, UpdatePermission
+from .permissions import ViewPermission, CreatePermission, DeletePermission, UpdatePermission
 # from core.serializers import BookSerializer
 from .models import User
 
@@ -21,10 +21,10 @@ CLIENT_ID = 'JEtg1v94VWNbpGoFwqiWxRR92QFESFHGHdwFiHvc'
 CLIENT_SECRET  ='V3TeQPIuc7rst7lSGLnqUGmcoAWVkTWug1zLlxDupsyTlGJ8Ag0CRalfCbfRHeKYQlksobwRElpxmDzsniABTiDYl7QCh6XXEXzgDrjBD4zSvtHbP0Qa707g3eYbmKxO'
 
 
-class BookViewSet(viewsets.ModelViewSet):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = (ViewPermission,)
+# class BookViewSet(generics.ListAPIView):
+#     queryset = Book.objects.all()
+#     serializer_class = BookSerializer
+#     permission_classes = (IsAuthenticated,)
 
 class See(generics.ListAPIView):
     queryset = Book.objects.all()
@@ -46,20 +46,20 @@ def create(request):
         serializer.save() 
     return Response(serializer.errors)
 
-class Update(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-# class Update(generics.UpdateAPIView):
+# class Update(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Book.objects.all()
-#     serializer_class = UpdateBookSerializer
-#     permission_classes = (AllowAny,)
+#     serializer_class = BookSerializer
+
+class Update(generics.UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = UpdateBookSerializer
+    permission_classes = (UpdatePermission,)
     
 
 class Delete(generics.DestroyAPIView):
-    queryset = User.objects.all()
+    queryset = Book.objects.all()
     serializer_class = DeleteSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (DeletePermission,)
 
 
 @api_view(['POST'])

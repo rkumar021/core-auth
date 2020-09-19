@@ -18,8 +18,8 @@ urlpatterns = [
     path('token/revoke/', views.revoke_token),
     path('view/', views.See.as_view()),
     path('create/', views.create, name="createbook"),
-    path('update/<int:bookid>/', views.Update, name="update"),
-    path('delete/', views.Delete.as_view(), name="delete"),
+    path('<pk>/update/', views.Update.as_view(), name="update"),
+    path('<pk>/delete/', views.Delete.as_view(), name= "delete"),
 
 ]
 
