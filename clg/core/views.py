@@ -1,18 +1,13 @@
+from django.db.models.base import Model
 from django.db.models.lookups import Lookup
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny,  IsAuthenticated
+from rest_framework.permissions import AllowAny
 import requests
 from .models import Book
-from .serializers import BookSerializer, SignUpSerializer, UpdateBookSerializer, DeleteSerializer, ViewSerializer, CreateBookSerializer
+from .serializers import BookSerializer, SignUpSerializer, DeleteSerializer, CreateBookSerializer
 from rest_framework import generics
-from rest_framework.generics import ListAPIView
-from rest_framework.views import APIView
-from django.http import Http404
-from rest_framework import status
 from .permissions import ViewPermission, CreatePermission, UpdatePermission
 # from core.serializers import BookSerializer
 from .models import User
@@ -24,7 +19,7 @@ CLIENT_SECRET  ='V3TeQPIuc7rst7lSGLnqUGmcoAWVkTWug1zLlxDupsyTlGJ8Ag0CRalfCbfRHeK
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = (ViewPermission,)
+    permission_classes = (UpdatePermission,)
 
 class See(generics.ListAPIView):
     queryset = Book.objects.all()
@@ -46,14 +41,10 @@ def create(request):
         serializer.save() 
     return Response(serializer.errors)
 
-class Update(generics.RetrieveUpdateDestroyAPIView):
+class Update(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-
-# class Update(generics.UpdateAPIView):
-#     queryset = Book.objects.all()
-#     serializer_class = UpdateBookSerializer
-#     permission_classes = (AllowAny,)
+    permission_classes = (UpdatePermission,)
     
 
 class Delete(generics.DestroyAPIView):

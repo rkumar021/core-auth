@@ -27,18 +27,6 @@ class SignUpSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-class ViewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', 'password')
-        write_only_fields = ('password',)
-
-
-class UpdateBookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = "__all__"
-
 class DeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
