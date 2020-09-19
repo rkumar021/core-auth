@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Demo</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% block homeactive %} {% endblock homeactive %} ">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container col-8 mt-2">
+        <form id="newPost" method="POST">
+            <div class="form-group">
+                <label for="price">Book Title</label>
+                <input type="text" class="form-control" id="title" name="name" placeholder="Enter the Name">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" placeholder="Enter the Price">
+            </div>
+            <div class="form-group">
+                <label for="descrition">Description: </label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="form-control btn btn-primary" value="Add Record">
+            </div>
+            <button type="clear" class="btn btn-primary">clear</button>
+        </form>
+        <div>
+            <a class="btn btn-primary mt-2" role="button" href="allrecord.html">All Record</a>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+
+    if (localStorage.getItem("username") != "") {
+        var form = document.getElementById('newPost')
+        form.addEventListener('submit', function (e) {
+
+            e.preventDefault()
+
+            var title1 = document.getElementById('title').value
+            var price1 = document.getElementById('price').value
+            var description1 = document.getElementById('description').value
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    alert("Record added Successfuly")
+                    location.replace("allrecord.html")
+                }else if (xhttp.readyState == 4 && xhttp.status == 403) {
+                    alert('You Can not do this Operation.... ');
+                    location.replace("allrecord.html")
+                }
+            }
+            xhttp.open("POST", "http://127.0.0.1:8000/create/", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
+            data = JSON.stringify({
+                title: title1,
+                price: price1,
+                description: description1
+            })
+            xhttp.send(data);
+        })
+    } else {
+        alert('Login to see the data');
+        location.replace("index.html")
+    }
+</script>
+
+</html>

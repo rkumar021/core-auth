@@ -1,0 +1,128 @@
+<!doctype html>
+
+<head>
+    <title>demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <div>
+                <form method="get" class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="nav-link" href="#" id="userdetails" role="button">
+
+                        </a>
+                        <button type="button" class="btn btn-success ml-2" id="logoutbutton"
+                            onclick="logout()">Logout</button>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container col-9">
+        <h1 class="text-center">Book Table</h1>
+        <div class="form-group">
+            <a class="form-control btn btn-primary" href="Home.html">Add new Record</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="table">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            if (localStorage.getItem("username") != "") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var bookdata = "";
+                        var data = JSON.parse(this.responseText);
+                        $.each(data, function (index) {
+                            var bookid = data[index].id
+                            bookdata += '<tr>'
+                            bookdata += '<td scope="row">' + data[index].id + '</td>'
+                            bookdata += '<td>' + data[index].created + '</td>'
+                            bookdata += '<td>' + data[index].title + '</td>'
+                            bookdata += '<td>' + data[index].description + '</td>'
+                            bookdata += '<td>' + data[index].price + '</td>'
+                            bookdata += '<td><a class="btn btn-primary" role="button" onclick="updatebook(' + bookid + ')">Update</a></td>'
+                            bookdata += '<td><a class="btn btn-danger" role="button" onclick="deletebook(' + bookid + ')">Delete</a></td>'
+                            bookdata += '</tr>'
+                        });
+                        $('#table').append(bookdata);
+                        var username = localStorage.getItem("username")
+                        document.getElementById("userdetails").innerHTML = "Welcome " + username
+                    } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                        alert('Something went wrong...');
+                    }
+                }
+                xhttp.open("GET", "http://127.0.0.1:8000/view/", true);
+                xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
+                xhttp.send();
+            } else {
+                alert('Login to see the data');
+                location.replace("index.html")
+            }
+        });
+
+        function updatebook(bookid) {
+            window.open("updatebook.html?bookid=" + bookid);
+        }
+
+        function deletebook(bookid) {
+            var choice = confirm("Are You Sure You Want To Delete this Record ?");
+            if (choice == true) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("DELETE", "http://127.0.0.1:8000/api/booksbooks/" + bookid + "/", true);
+                xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
+                xhttp.send();
+                location.reload()
+            }
+        }
+
+        function logout() {
+            var choice = confirm("Are You Sure You Want Logout ?");
+            if (choice == true) {
+                localStorage.setItem("username", "");
+                localStorage.setItem("access_token", "");
+                localStorage.setItem("refresh_token", "");
+                alert("You have successfully logged out");
+                location.replace("index.html")
+            }
+        }
+    </script>
+</body>
+
+</html>

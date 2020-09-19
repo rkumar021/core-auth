@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Demo</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Project</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <form method="get" class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userdetails" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item btn btn-success" role="button" id="logoutbutton" onclick="logout()"
+                                href="#"></a>
+                        </div>
+                    </li>
+                </ul>
+                <div id="userlogin">
+                    <!-- Button to trigger SignIn Modal -->
+                    <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#signinModal">
+                        Login
+                    </button>
+                    <!-- Button to trigger SignUp Modal -->
+                    <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#registerModal">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div>
+        <a class="dropdown-item btn btn-success" role="button" id="logoutbutton" href="allrecord.html">ShowAllRecord</a>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="signinModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signinModalTitle">Register Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="registerform">
+                        <div class="form-group">
+                            <label for="username">UserName:</label>
+                            <input type="text" class="form-control" id="registerusername" name="loginusername"
+                                placeholder="Enter Username" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="current-password">Enter Password:</label>
+                            <input type="password" class="form-control" id="registerpassword" name="loginpassword"
+                                placeholder="Enter Your Password" Required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- logIn Modal -->
+    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signinModalTitle">Login Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="loginform">
+                        <div class="form-group">
+                            <label for="username">UserName:</label>
+                            <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                placeholder="Enter Username" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="current-password">Enter Password:</label>
+                            <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                                placeholder="Enter Your Password" Required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="next" value="{{ next }}" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    if (localStorage.getItem("username") == "") {
+        var form = document.getElementById('registerform')
+        form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            var username1 = document.getElementById('registerusername').value
+            var password1 = document.getElementById('registerpassword').value
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    alert('Registration Success');
+                } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                    alert('Something went wrong...');
+                }
+            }
+            xhttp.open("POST", "http://127.0.0.1:8000/signup/", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            data = JSON.stringify({
+                username: username1,
+                password: password1,
+            })
+            xhttp.send(data);
+        })
+
+        var form = document.getElementById('loginform')
+        form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            var username1 = document.getElementById('loginusername').value
+            var password1 = document.getElementById('loginpassword').value
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    localStorage.setItem("username", username1);
+                    var responsobject = JSON.parse(this.responseText);
+                    localStorage.setItem("login", "true");
+                    var access_token = responsobject.access_token;
+                    localStorage.setItem("access_token", access_token);
+                    var refresh_token = responsobject.refresh_token;
+                    localStorage.setItem("refresh_token", refresh_token);
+                    document.getElementById("userdetails").innerHTML = "Welcome " + username1
+                    document.getElementById("userlogin").innerHTML = " "
+                    document.getElementById("logoutbutton").innerHTML = "Logout"
+                    alert("Welcome " + username1);
+                } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                    alert('Something went wrong...');
+                    var responsobject = JSON.parse(this.responseText);
+                    console.log(responsobject);
+                }
+            }
+            xhttp.open("POST", "http://127.0.0.1:8000/token/", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            data = JSON.stringify({
+                username: username1,
+                password: password1,
+            })
+            xhttp.send(data);
+        })
+    } else {
+        localStorage.setItem("username", username1);
+        document.getElementById("userdetails").innerHTML = "Welcome " + username1
+        document.getElementById("userlogin").innerHTML = " "
+        document.getElementById("logoutbutton").innerHTML = "Logout"
+    }
+
+    function logout() {
+        var choice = confirm("Are You Sure You Want Logout ?");
+        if (choice == true) {
+            localStorage.setItem("username", "");
+            localStorage.setItem("access_token", "");
+            localStorage.setItem("refresh_token", "");
+            alert("You have successfully logged out");
+            location.replace("index.html")
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+
+<head>
+    <title>demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container col-8 mt-2">
+        <form id="newPost" method="POST">
+            <div class="form-group">
+                <label for="price">Book Title</label>
+                <input type="text" class="form-control" id="title" name="name" value=" " placeholder="Enter the Name">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" value=" " placeholder="Enter the Price">
+            </div>
+            <div class="form-group">
+                <label for="descrition">Description: </label>
+                <textarea class="form-control" id="description" name="description" value=" " rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="form-control btn btn-primary" value="Update Record">
+            </div>
+            <button type="clear" class="btn btn-primary">clear</button>
+        </form>
+        <div>
+            <a class="btn btn-primary mt-2" role="button" href="allrecord.html">All Record</a>
+        </div>
+    </div>
+    <script>
+
+        if (localStorage.getItem("username") != "") {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const bookid1 = urlParams.get('bookid')
+
+            $(document).ready(function () {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var data = JSON.parse(this.responseText);
+                        document.getElementById('title').value = data.title
+                        document.getElementById('price').value = data.price
+                        document.getElementById('description').value = data.description
+                    } else if (xhttp.readyState == 4 && xhttp.status == 403) {
+                        alert('You Can not do this Operation.... ');
+                        location.replace("allrecord.html")
+                    } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                        alert('Something went wrong...');
+                    }
+                }
+                xhttp.open("GET", "http://127.0.0.1:8000/api/booksbooks/" + bookid1 + "/", true);
+                xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
+                xhttp.send();
+            });
+
+            var form = document.getElementById('newPost')
+            form.addEventListener('submit', function (e) {
+
+                e.preventDefault()
+
+                var title1 = document.getElementById('title').value
+                var price1 = document.getElementById('price').value
+                var description1 = document.getElementById('description').value
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        alert("Record Updated Successfuly")
+                        location.replace("allrecord.html")
+                    }
+                }
+                xhttp.open("PUT", "http://127.0.0.1:8000/" +bookid1+ "/update/", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.setRequestHeader("authorization", "Bearer " + localStorage.getItem("access_token"));
+                data = JSON.stringify({
+                    title: title1,
+                    price: price1,
+                    description: description1
+                })
+                xhttp.send(data);
+            })
+        } else {
+            alert('Login to see the data');
+            location.replace("index.html")
+        }
+    </script>
+</body>
+
+</html>
